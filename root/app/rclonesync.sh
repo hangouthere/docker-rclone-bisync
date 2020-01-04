@@ -11,12 +11,14 @@
         first_sync=""
     fi
 
-    touch $first_sync_semaphore
+    if [ "$SYNC_EXTRA_FLAGS" ]; then
+        extra_flags="--rclone-args $SYNC_EXTRA_FLAGS"
+    fi
     
-    clone_cmd="/app/rclonesync.py /data $SYNC_DESTINATION: -c $first_sync"
+    clone_cmd="/app/rclonesync.py $first_sync -c /data $SYNC_DESTINATION: $extra_flags"
 
     if [ "$CLONE_COMMAND" ]; then
-    clone_cmd="$CLONE_COMMAND"
+        clone_cmd="$CLONE_COMMAND"
     else
         if [ -z "$SYNC_DESTINATION" ]; then
         echo "Error: SYNC_DESTINATION environment variable was not passed to the container."
@@ -26,4 +28,7 @@
 
     echo "Executing => $clone_cmd"
     eval "$clone_cmd"
+
+    echo "Enforcing First Sync Semaphore => $first_sync_semaphore"
+    touch $first_sync_semaphore
 ) 200>/var/lock/rclonesync.lock

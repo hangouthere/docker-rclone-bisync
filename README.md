@@ -37,7 +37,9 @@ As part of the kickoff cron script, a "First Run" is kept track of by storing a 
 
 Also enforced by default is the `check-access` feature. tldr - add an `RCLONE_TEST` file to one of the paths.
 
-Last but not least, in similar fashion of the `tynor88/rclone` image, you can supply a `CLONE_COMMAND` env var to override the default found in `rclonesync.sh`. 
+An additional environment variable has been added to simply augment the default command: `SYNC_EXTRA_FLAGS`. Internally, this sets a variable and utilizes the `--rclone-args` supplied by `rclonesync-v2` and appends to the command.
+
+Last but not least, in similar fashion of the `tynor88/rclone` image, you can supply a `CLONE_COMMAND` env var to override the entire default found in `rclonesync.sh`. 
 
 ## Example (compose)
 
@@ -54,6 +56,7 @@ services:
       - PGID=1000                   #  host user for file permissions
       - CRON_SCHEDULE=*/15 * * * *  # Execute on the 15min marks (15/30/45/60)
       - SYNC_DESTINATION=<sync destination from .rclone.conf>
+      - SYNC_EXTRA_FLAGS=--drive-skip-gdocs #Add RClone flags to default command easily
     volumes:
       - ./configs/rclone:/config    # needs to stay a directory since this is the user's home directory
       - /path/to/myGoogleDrive:/data
