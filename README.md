@@ -58,6 +58,6 @@ services:
       - SYNC_DESTINATION=<sync destination from .rclone.conf>
       - SYNC_EXTRA_FLAGS=--drive-skip-gdocs #Add RClone flags to default command easily
     volumes:
-      - ./configs/rclone:/config    # needs to stay a directory since this is the user's home directory
+      - ./volumes/rclone:/config    # needs to stay a directory since this is the user's home directory
       - /path/to/myGoogleDrive:/data
 ```
