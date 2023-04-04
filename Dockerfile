@@ -1,4 +1,4 @@
-FROM rclone/rclone:1.58.1
+FROM rclone/rclone:1.62
 
 MAINTAINER nfgCodex <nfg.codex@outlook.com>
 

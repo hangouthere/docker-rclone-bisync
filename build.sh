@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=2.0.0
+VERSION=2.0.1
 
 MY_PATH="`dirname \"$0\"`"              # relative
 MY_PATH="`( cd \"$MY_PATH\" && pwd )`"  # absolutized and normalized
